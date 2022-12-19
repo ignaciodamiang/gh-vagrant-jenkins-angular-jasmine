@@ -9,12 +9,12 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        sh 'cd jenkins-tests && npm install'
+        sh 'npm install'
       }
     }
     stage('Run tests') {
       steps {
-        sh 'cd jenkins-tests && ng test --watch=false'
+        sh 'ng test --watch=false'
       }
     }
   }
