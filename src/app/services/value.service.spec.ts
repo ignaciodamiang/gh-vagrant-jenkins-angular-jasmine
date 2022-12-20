@@ -6,7 +6,6 @@ describe('ValueService', () => {
   let service: ValueService;
 
   beforeEach(() => {
-    // Inject only services needed for the test
     TestBed.configureTestingModule({
       providers: [ValueService],
     });
