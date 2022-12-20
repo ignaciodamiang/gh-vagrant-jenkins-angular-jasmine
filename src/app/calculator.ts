@@ -3,7 +3,7 @@ export class Calculator {
     return a + b;
   }
 
-  subtract(a: number, b: number) {
+  substract(a: number, b: number) {
     return a - b;
   }
 
