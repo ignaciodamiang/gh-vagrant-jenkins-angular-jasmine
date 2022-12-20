@@ -1,17 +1,16 @@
-// import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { ValueService } from './value.service';
 
 describe('ValueService', () => {
   let service: ValueService;
 
-  // beforeEach(() => {
-  //   TestBed.configureTestingModule({});
-  //   service = TestBed.inject(ValueService);
-  // });
-
   beforeEach(() => {
-    service = new ValueService();
+    // Inject only services needed for the test
+    TestBed.configureTestingModule({
+      providers: [ValueService],
+    });
+    service = TestBed.inject(ValueService);
   });
 
   describe('test init', () => {
