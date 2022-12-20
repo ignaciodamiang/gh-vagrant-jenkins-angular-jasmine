@@ -9,7 +9,6 @@ describe('MasterService', () => {
     expect(masterService.getValue()).toBe('my value');
   });
 
-  // Método 1: Crear una clase FakeValueService que implemente la interfaz ValueService
   it('should return "other value" from the fake service', () => {
     const fakeValueService = new FakeValueService();
     const masterService = new MasterService(
@@ -18,10 +17,23 @@ describe('MasterService', () => {
     expect(masterService.getValue()).toBe('fake value');
   });
 
-  // Método 2: Crear un objeto que simule la interfaz ValueService
   it('should return "other value" from the fake object', () => {
     const fake = { getValue: () => 'fake value from object' };
     const masterService = new MasterService(fake as ValueService);
     expect(masterService.getValue()).toBe('fake value from object');
+  });
+
+  // Metodo 3: Jasmine Spy
+  it('should call to getValue from ValueService', () => {
+    const valueServiceSpy = jasmine.createSpyObj('ValueService', ['getValue']);
+    valueServiceSpy.getValue.and.returnValue('fake spying value');
+    const masterService = new MasterService(valueServiceSpy);
+    expect(masterService.getValue()).toBe('fake spying value');
+    // spy 1
+    expect(valueServiceSpy.getValue.calls.count()).toBe(1);
+    // spy 2
+    expect(valueServiceSpy.getValue).toHaveBeenCalled();
+    // spy 3
+    expect(valueServiceSpy.getValue).toHaveBeenCalledTimes(1);
   });
 });

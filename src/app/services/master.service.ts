@@ -5,7 +5,6 @@ import { ValueService } from './value.service';
   providedIn: 'root',
 })
 export class MasterService {
-  // La inyección de dependencias se define en el constructor, que tiene un patrón singleton que crea una sola instancia y la comparte en toda la aplicación.
   constructor(private valueService: ValueService) {}
 
   getValue() {
