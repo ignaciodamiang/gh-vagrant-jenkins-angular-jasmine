@@ -31,3 +31,7 @@ apt-get install -y git jenkins
 sudo apt update && sudo apt -y upgrade
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt -y install ./google-chrome-stable_current_amd64.deb
+rm -rf google-chrome-stable_current_amd64.deb
+
+# Run /vagrant/scripts/init.py
+python3 /vagrant/scripts/init.py
