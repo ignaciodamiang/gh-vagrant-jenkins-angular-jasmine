@@ -35,3 +35,12 @@ rm -rf google-chrome-stable_current_amd64.deb
 
 # Run /vagrant/scripts/init.py
 python3 /vagrant/scripts/init.py
+
+# Install Webhook Relay
+curl https://my.webhookrelay.com/webhookrelay/downloads/install-cli.sh | bash
+# Login to Webhook Relay with params
+relay login -k your-token-key -s your-token-secret
+# read .env file in /vagrant
+source /vagrant/.env
+# Login to Webhook Relay with .env file
+relay login -k $WEBHOOK_RELAY_TOKEN -s $WEBHOOK_RELAY_TOKEN_SECRET
