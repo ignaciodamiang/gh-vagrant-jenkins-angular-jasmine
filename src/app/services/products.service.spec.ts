@@ -4,7 +4,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { ProductsService } from './products.service';
-import { Product } from '../models/product.model';
+import { CreateProductDTO, Product } from '../models/product.model';
 import {
   generateManyProducts,
   generateOneProduct,
@@ -22,6 +22,10 @@ fdescribe('ProductsService', () => {
     });
     productsService = TestBed.inject(ProductsService);
     httpTestingController = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpTestingController.verify();
   });
 
   it('should be created', () => {
@@ -44,7 +48,6 @@ fdescribe('ProductsService', () => {
       const url = `${environment.API_URL}/api/v1/products`;
       const req = httpTestingController.expectOne(url);
       req.flush(mockProducts);
-      httpTestingController.verify();
     });
   });
 
@@ -63,7 +66,6 @@ fdescribe('ProductsService', () => {
       const url = `${environment.API_URL}/api/v1/products`;
       const req = httpTestingController.expectOne(url);
       req.flush(mockProducts);
-      httpTestingController.verify();
     });
 
     it('should return product list with taxes', (doneFn) => {
@@ -123,7 +125,32 @@ fdescribe('ProductsService', () => {
       const params = req.request.params;
       expect(params.get('limit')).toEqual(`${limit}`);
       expect(params.get('offset')).toEqual(`${offset}`);
-      httpTestingController.verify();
+    });
+  });
+
+  describe('Tests for create', () => {
+    it('should return a new product', (doneFn) => {
+      // Arrange
+      const mockProduct = generateOneProduct();
+      const dto: CreateProductDTO = {
+        title: 'new Product',
+        price: 100,
+        images: ['img'],
+        description: 'description',
+        categoryId: 1,
+      };
+      // Act
+      productsService.create({ ...dto }).subscribe((data) => {
+        // Assert
+        expect(data).toEqual(mockProduct);
+        doneFn();
+      });
+      // http config
+      const url = `${environment.API_URL}/api/v1/products`;
+      const req = httpTestingController.expectOne(url);
+      req.flush(mockProduct);
+      expect(req.request.body).toEqual(dto);
+      expect(req.request.method).toEqual('POST');
     });
   });
 });
