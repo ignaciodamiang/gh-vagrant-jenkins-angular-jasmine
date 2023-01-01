@@ -18,7 +18,7 @@ import { HttpStatusCode, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../interceptors/token.interceptor';
 import { TokenService } from './token.service';
 
-fdescribe('ProductsService', () => {
+describe('ProductsService', () => {
   let productsService: ProductsService;
   let httpTestingController: HttpTestingController;
   let tokenService: TokenService;
@@ -26,11 +26,15 @@ fdescribe('ProductsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ProductsService,
+      providers: [
+        ProductsService,
         TokenService,
         {
-            provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
-        }],
+          provide: HTTP_INTERCEPTORS,
+          useClass: TokenInterceptor,
+          multi: true,
+        },
+      ],
     });
     productsService = TestBed.inject(ProductsService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -62,7 +66,7 @@ fdescribe('ProductsService', () => {
       const url = `${environment.API_URL}/api/v1/products`;
       const req = httpTestingController.expectOne(url);
       const headers = req.request.headers;
-      expect(headers.get('Authorization')).toEqual('Bearer fake token')
+      expect(headers.get('Authorization')).toEqual('Bearer fake token');
       req.flush(mockProducts);
     });
   });
